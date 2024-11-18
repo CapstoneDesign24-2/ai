@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Translation Service</title>
+</head>
+<body>
+    <h1>Text Translation</h1>
+    <form id="translateForm">
+        <label for="text">Text:</label>
+        <input type="text" id="text" name="text" required><br><br>
+        
+        <label for="source_lang">Source Language:</label>
+        <input type="text" id="source_lang" name="source_lang" value="ko" required><br><br>
+        
+        <label for="target_lang">Target Language:</label>
+        <input type="text" id="target_lang" name="target_lang" value="vi" required><br><br>
+        
+        <button type="button" onclick="translateText()">Translate</button>
+    </form>
+    
+    <h2>Translation Result:</h2>
+    <p id="result"></p>
+    
+    <script>
+        async function translateText() {
+            const text = document.getElementById("text").value;
+            const sourceLang = document.getElementById("source_lang").value;
+            const targetLang = document.getElementById("target_lang").value;
+            
+            const response = await fetch("/translate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ text: text, source_lang: sourceLang, target_lang: targetLang })
+            });
+            
+            const data = await response.json();
+            document.getElementById("result").innerText = data.translated_text;
+        }
+    </script>
+</body>
+</html>
