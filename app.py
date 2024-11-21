@@ -11,7 +11,7 @@ model_dir = "lsylsy99/m2m_kovi_translate"
 tokenizer = M2M100Tokenizer.from_pretrained(model_dir)
 model = M2M100ForConditionalGeneration.from_pretrained(model_dir)
 
-@app.route("/create", methods=["POST"])
+@app.route("/create", methods=['POST', 'OPTIONS'])
 def create():
     json_input = request.get_json()
     type = json_input.get("selectedType", "")
@@ -121,7 +121,7 @@ def create():
     return jsonify({"subject" : title, "content": result})
 
 
-@app.route("/translate", methods=["POST"])
+@app.route("/translate", methods=['POST', 'OPTIONS'])
 def translate():
     json_input = request.get_json()
     title = json_input.get("subject","")
@@ -144,7 +144,7 @@ def translate():
     return jsonify({"t_subject" : translate_title, "t_content" : translated})
 
 ##커뮤니티 번역 한국-베트남(임시)
-@app.route("/community_kovi", methods=["POST"])
+@app.route("/community_kovi", methods=['POST', 'OPTIONS'])
 def translate_co_kovi():
     data = request.get_json()
     text = data.get("text", "")
@@ -163,7 +163,7 @@ def translate_co_kovi():
     return jsonify({"content": translated})
         
 ##커뮤니티 번역 베트남-한국(임시)
-@app.route("/community_viko", methods=["POST"])
+@app.route("/community_viko", methods=['POST', 'OPTIONS'])
 def translate_co_viko():
     data = request.get_json()
     text = data.get("text", "")
