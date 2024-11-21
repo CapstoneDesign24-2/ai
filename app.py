@@ -4,8 +4,8 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 # Enable CORS
-CORS(app)
-CORS(app,resource={r'*':{'origins':'*'}})
+# CORS(app)
+CORS(app,resource={r'*':{'origins':'*'}}, supports_credentials=True)
 
 model_dir = "lsylsy99/m2m_kovi_translate"
 tokenizer = M2M100Tokenizer.from_pretrained(model_dir)
