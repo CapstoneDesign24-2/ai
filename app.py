@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify, render_template
 from transformers import M2M100ForConditionalGeneration, M2M100Tokenizer
+from flask_cors import CORS
 
 app = Flask(__name__)
+# Enable CORS
+CORS(app)
 
 model_dir = "lsylsy99/m2m_kovi_translate"
 # model_dir = "mytrans_model"
