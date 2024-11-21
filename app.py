@@ -61,14 +61,14 @@ def create():
                 ]
 
         elif type == 'Hoàn trả tiền đặt cọc thuê nhà':  # 임대차 보증금 반환 이건 내용증명 로직 잘못됐음.
-            title = ""
+            title = "임대차 보증금 반환 청구"
             # additional_text = [
             #     f"2. 본 발신인은 귀하와 {information['contractDate']}일 임대차계약을 체결하였으며, 이에 귀하는 본 발신인에게 임대차 보증금 {information['depositAmount']}원을 반환할 의무가 있습니다.",
             #     f"3. 본 발신인은 귀하가 {information['returnDate']}일까지 보증금을 반환할 것을 촉구합니다. 이를 이행하지 않을 경우, 민사집행법 제276조 이하 등에 따른 가압류 등 보전 처분 및 민사소송법 등에 따른 법적 조치를 할 것을 경고합니다.",
             #     "이 경우 귀하는 원금, 지연손해금, 소송비용까지 부담하게 될 것입니다.",
             #     "게다가 본 발신인이 소송을 제기하면 지연손해금은 소송촉진 등에 관한 특례법 제3조 제1항 본문의 법정이율에 따라 연 12%가 될 것입니다."
             # ]f
-            return None
+            return title , "준비중"
 
         elif type == 'Hủy hợp đồng thuê':  # 임대차 계약 해지
             title = '임대차 계약해지'
@@ -106,15 +106,15 @@ def create():
                 "본 발신인이 소송을 제기하면 지연손해금은 소송촉진 등에 관한 특례법 제3조 제1항 본문의 법정이율에 관한 규정에 따라 연 12%가 될 것입니다.",
                 "4. 본 발신인이 귀하에게 위와 같은 법적 조치를 취하기 전에 귀하는 기한 내에 위와 같은 의무를 이행하여 본 건을 원만하게 해결하시기를 마지막으로 말씀드립니다.",
             ]
-            return base_text[:1] + additional_text
+            return title, base_text[:1] + additional_text
 
         else:
             return ["지원되지 않는 요청 타입입니다."]        
         
     ### 2번은 로직이 잘못돼서 준비중이라고 표시
     title, result = generate_naeyong(type, information, json_input)
-    if result==None:
-        return jsonify({"result": '준비중입니다'})
+    # if result==None:
+    #     return jsonify({"result": '준비중입니다'})
     return jsonify({"subject" : title, "content": result})
 
 
