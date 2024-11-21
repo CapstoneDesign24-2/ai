@@ -7,7 +7,6 @@ app = Flask(__name__)
 CORS(app)
 
 model_dir = "lsylsy99/m2m_kovi_translate"
-# model_dir = "mytrans_model"
 tokenizer = M2M100Tokenizer.from_pretrained(model_dir)
 model = M2M100ForConditionalGeneration.from_pretrained(model_dir)
 
