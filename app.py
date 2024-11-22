@@ -5,11 +5,25 @@ from flask_cors import CORS
 app = Flask(__name__)
 # Enable CORS
 # CORS(app)
-CORS(app,resource={r'*':{'origins':'*'}}, supports_credentials=True)
+CORS(app, resources={r"*": {"origins": "http://3.27.71.229"}}, supports_credentials=True)
 
 model_dir = "lsylsy99/m2m_kovi_translate"
 tokenizer = M2M100Tokenizer.from_pretrained(model_dir)
 model = M2M100ForConditionalGeneration.from_pretrained(model_dir)
+
+
+@app.before_request
+def handle_options_request():
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'OK'}), 200
+
+@app.after_request
+def add_cors_headers(response):
+    response.headers.add("Access-Control-Allow-Origin", "http://3.27.71.229")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
+    response.headers.add("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
+    response.headers.add("Access-Control-Allow-Credentials", "true")
+    return response
 
 @app.route("/create", methods=['POST', 'OPTIONS'])
 def create():
